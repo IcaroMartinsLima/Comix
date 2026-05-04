@@ -1,9 +1,10 @@
-import { Text, View } from "react-native";
+import { Text } from "react-native";
+import ScreenBackground from "../components/ScreenBackground";
 
 export default function HomeScreen() {
   return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
+    <ScreenBackground>
+      <Text> Bom dia</Text>
+    </ScreenBackground>
   );
 }

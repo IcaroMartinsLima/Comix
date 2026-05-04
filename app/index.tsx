@@ -39,7 +39,7 @@ export default function index() {
     );
     if (newUser) {
       setUser(newUser);
-      router.replace("/(tabs)/dummy");
+      router.replace("/(tabs)/homeScreen");
     } else {
       console.log("Usuario não encontrado");
       console.log({ allUser });
