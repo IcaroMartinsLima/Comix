@@ -4,6 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
 import { useCallback, useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import {
     Button,
@@ -11,39 +12,52 @@ import {
     Platform,
     StyleSheet,
     Text,
-    TouchableOpacity,
     View,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
-export default function index() {
-  const { user, setUser, allUser, addUser } = useUserStore();
+export default function signIn() {
+  const { user, allUser, addUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
+  const [userName, setUserName] = useState("");
   useEffect(() => {
     if (user) router.replace("/(tabs)/HomeScreen");
   }, [user]);
   const validUserInput = useCallback(() => {
-    if (userEmail.trim().length === 0) {
+    const isValidEmail = (email: string) => {
+      return /\S+@\S+\.\S+/.test(email);
+    };
+    if (userName.trim().length === 0) {
       console.log("Nome invalido");
+      return;
+    }
+    if (userEmail.trim().length === 0 || !isValidEmail(userEmail)) {
+      console.log("Email invalido");
       return;
     }
     if (userPassword.trim().length === 0) {
       console.log("Senha invalida");
       return;
     }
-    login(userEmail, userPassword);
-  }, [userEmail, userPassword]);
-  function login(userEmail: string, userPassword: string) {
-    const newUser = allUser.find(
-      (u) => u.email.trim() === userEmail.trim() && u.password.trim() === userPassword.trim(),
-    );
-    if (newUser) {
-      setUser(newUser);
-      router.replace("/(tabs)/HomeScreen");
+    createAcount(userName, userEmail, userPassword);
+  }, [userName, userEmail, userPassword]);
+  function createAcount(
+    userName: string,
+    userEmail: string,
+    userPassword: string,
+  ) {
+    const emailExist = allUser.some((u) => u.email === userEmail);
+    if (emailExist) {
+      console.log("Email já cadastrado");
     } else {
-      console.log("Usuario não encontrado");
-      console.log({allUser})
+      addUser({
+        email: userEmail.toLowerCase().trim(),
+        password: userPassword.trim(),
+        username: userName.trim(),
+        id: uuidv4(),
+      });
+      router.replace("..");
     }
   }
   return (
@@ -56,15 +70,32 @@ export default function index() {
           <Feather name="shopping-bag" size={32} color={Colors.secondary} />
         </View>
         <Text style={styles.title}>Portal de vendas</Text>
-        <Text style={styles.subTitle}>Faça login para continuar</Text>
+        <Text style={styles.subTitle}>Crie sua conta</Text>
+
         <View style={styles.card}>
+          <View style={styles.row}>
+            <MaterialCommunityIcons
+              name="account"
+              size={20}
+              color={Colors.secondary}
+            />
+            <Text>Nome</Text>
+          </View>
+
+          <TextInput
+            style={styles.input}
+            textContentType="name"
+            value={userName}
+            onChangeText={setUserName}
+
+          />
           <View style={styles.row}>
             <MaterialCommunityIcons
               name="email"
               size={20}
               color={Colors.secondary}
             />
-            <Text>Email</Text>
+            <Text>E-mail</Text>
           </View>
 
           <TextInput
@@ -72,7 +103,7 @@ export default function index() {
             textContentType="emailAddress"
             value={userEmail}
             onChangeText={setUserEmail}
-            autoCapitalize="none"
+                        autoCapitalize="none"
           />
 
           <View style={styles.row}>
@@ -96,9 +127,6 @@ export default function index() {
             color={Colors.secondary}
             onPress={validUserInput}
           ></Button>
-          <TouchableOpacity onPress={() => router.push("/signIn")}>
-            <Text>Não tem conta? Cadastre-se</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
