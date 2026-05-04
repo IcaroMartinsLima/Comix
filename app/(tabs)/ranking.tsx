@@ -1,9 +1,9 @@
 import { Text, View } from "react-native";
 
-export default function HomeScreen() {
+export default function Ranking() {
   return (
     <View>
-      <Text>HomeScreen</Text>
+      <Text>Ranking</Text>
     </View>
   );
 }

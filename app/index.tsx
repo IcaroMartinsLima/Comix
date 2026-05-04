@@ -3,16 +3,16 @@ import { useUserStore } from "@/stores/userStore";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import {
-    Button,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Button,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
@@ -20,9 +20,6 @@ export default function index() {
   const { user, setUser, allUser, addUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
-  useEffect(() => {
-    if (user) router.replace("/(tabs)/HomeScreen");
-  }, [user]);
   const validUserInput = useCallback(() => {
     if (userEmail.trim().length === 0) {
       console.log("Nome invalido");
@@ -36,14 +33,16 @@ export default function index() {
   }, [userEmail, userPassword]);
   function login(userEmail: string, userPassword: string) {
     const newUser = allUser.find(
-      (u) => u.email.trim() === userEmail.trim() && u.password.trim() === userPassword.trim(),
+      (u) =>
+        u.email.trim() === userEmail.trim() &&
+        u.password.trim() === userPassword.trim(),
     );
     if (newUser) {
       setUser(newUser);
-      router.replace("/(tabs)/HomeScreen");
+      router.replace("/(tabs)/dummy");
     } else {
       console.log("Usuario não encontrado");
-      console.log({allUser})
+      console.log({ allUser });
     }
   }
   return (

@@ -33,14 +33,12 @@ export const useUserStore = create<UserStore>()(
 
       removeUser: (user) =>
         set((state) => ({
-          allUser: state.allUser.filter(
-            (value) => value.email !== user.email
-          ),
+          allUser: state.allUser.filter((value) => value.email !== user.email),
         })),
     }),
     {
       name: "user-storage",
       storage: createJSONStorage(() => AsyncStorage),
-    }
-  )
+    },
+  ),
 );

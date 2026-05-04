@@ -3,27 +3,24 @@ import { useUserStore } from "@/stores/userStore";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 import {
-    Button,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    View,
+  Button,
+  KeyboardAvoidingView,
+  Platform,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 
 export default function signIn() {
-  const { user, allUser, addUser } = useUserStore();
+  const { allUser, addUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userName, setUserName] = useState("");
-  useEffect(() => {
-    if (user) router.replace("/(tabs)/HomeScreen");
-  }, [user]);
   const validUserInput = useCallback(() => {
     const isValidEmail = (email: string) => {
       return /\S+@\S+\.\S+/.test(email);
@@ -87,7 +84,6 @@ export default function signIn() {
             textContentType="name"
             value={userName}
             onChangeText={setUserName}
-
           />
           <View style={styles.row}>
             <MaterialCommunityIcons
@@ -103,7 +99,7 @@ export default function signIn() {
             textContentType="emailAddress"
             value={userEmail}
             onChangeText={setUserEmail}
-                        autoCapitalize="none"
+            autoCapitalize="none"
           />
 
           <View style={styles.row}>
