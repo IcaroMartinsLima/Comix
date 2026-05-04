@@ -17,7 +17,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 
 export default function index() {
-  const { user, setUser, allUser, addUser } = useUserStore();
+  const { setUser, allUser, addUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const validUserInput = useCallback(() => {

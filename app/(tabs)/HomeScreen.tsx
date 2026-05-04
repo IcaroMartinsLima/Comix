@@ -1,4 +1,4 @@
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import ScreenBackground from "../components/ScreenBackground";
 
 export default function HomeScreen() {
@@ -8,3 +8,5 @@ export default function HomeScreen() {
     </ScreenBackground>
   );
 }
+
+const styles = StyleSheet.create({});
