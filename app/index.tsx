@@ -5,7 +5,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
-export default function LoginScreen(){
+export default function index(){
     return (
         <View style={styles.container} >
             <View style={styles.icon}>
