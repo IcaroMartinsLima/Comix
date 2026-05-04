@@ -1,10 +1,7 @@
 module.exports = {
   root: true,
 
-  extends: [
-    "expo", // regras padrão do Expo / React Native
-    "prettier", // desativa conflitos com Prettier
-  ],
+  extends: ["expo", "prettier"],
 
   env: {
     browser: true,
@@ -13,22 +10,17 @@ module.exports = {
   },
 
   rules: {
-    // 🔹 qualidade de código
     "no-unused-vars": "warn",
     "no-console": "warn",
 
-    // 🔹 React
-    "react/react-in-jsx-scope": "off", // não precisa no Expo
+    "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
 
-    // 🔹 React Hooks
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
 
-    // 🔹 React Native
-    "react-native/no-inline-styles": "off", // pode ligar se quiser mais rigor
+    "react-native/no-inline-styles": "off",
 
-    // 🔹 estilo leve (o Prettier cuida do resto)
     "comma-dangle": "off",
   },
 };
