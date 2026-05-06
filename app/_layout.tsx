@@ -10,6 +10,7 @@ import { ActivityIndicator, View } from "react-native";
 import "react-native-get-random-values";
 import "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ToastManager from "toastify-react-native";
 
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useUserStore } from "@/stores/userStore";
@@ -77,6 +78,7 @@ export default function RootLayout() {
           )}
         </Stack>
         <StatusBar style="auto" />
+        <ToastManager />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

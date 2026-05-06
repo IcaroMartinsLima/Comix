@@ -43,8 +43,8 @@ export default function ScreenBackground({
         style={[
           styles.content,
           {
-            paddingTop: headerHeight - 80,
-            paddingBottom: insets.bottom,
+            paddingTop: headerHeight - headerHeight * 0.6,
+            paddingBottom: 12,
             paddingHorizontal: 16,
           },
         ]}
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: "center",
+    gap: 20,
   },
   text: {
     color: Colors.white,

@@ -4,6 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
+import { Toast } from "toastify-react-native";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -12,6 +13,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
@@ -26,15 +28,15 @@ export default function signIn() {
       return /\S+@\S+\.\S+/.test(email);
     };
     if (userName.trim().length === 0) {
-      console.log("Nome invalido");
+      Toast.warn("Preencha o nome");
       return;
     }
     if (userEmail.trim().length === 0 || !isValidEmail(userEmail)) {
-      console.log("Email invalido");
+      Toast.warn("Informe um email válido");
       return;
     }
     if (userPassword.trim().length === 0) {
-      console.log("Senha invalida");
+      Toast.warn("Preencha a senha");
       return;
     }
     createAcount(userName, userEmail, userPassword);
@@ -46,7 +48,7 @@ export default function signIn() {
   ) {
     const emailExist = allUser.some((u) => u.email === userEmail);
     if (emailExist) {
-      console.log("Email já cadastrado");
+      Toast.error("Email já cadastrado");
     } else {
       const newUser = {
         email: userEmail.toLowerCase().trim(),
@@ -57,6 +59,7 @@ export default function signIn() {
 
       addUser(newUser);
       setUser(newUser);
+      Toast.success("Cadastro realizado com sucesso");
       router.replace({ pathname: "/(tabs)/homeScreen" });
     }
   }
@@ -123,10 +126,13 @@ export default function signIn() {
             onChangeText={setUserPassword}
           />
           <Button
-            title="Entrar"
+            title="Cadastrar"
             color={Colors.secondary}
             onPress={validUserInput}
           ></Button>
+          <TouchableOpacity onPress={() => router.back()}>
+            <Text>Já tem conta? Faça login</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>

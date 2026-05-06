@@ -4,6 +4,7 @@ import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
 import { useCallback, useState } from "react";
+import { Toast } from "toastify-react-native";
 
 import {
   Button,
@@ -17,16 +18,16 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 
 export default function index() {
-  const { user, setUser, allUser, addUser } = useUserStore();
-  const [userEmail, setUserEmail] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const { user, setUser, allUser } = useUserStore();
+  const [userEmail, setUserEmail] = useState(user?.email ?? "");
+  const [userPassword, setUserPassword] = useState(user?.password ?? "");
   const validUserInput = useCallback(() => {
     if (userEmail.trim().length === 0) {
-      console.log("Nome invalido");
+      Toast.warn("Preencha o email");
       return;
     }
     if (userPassword.trim().length === 0) {
-      console.log("Senha invalida");
+      Toast.warn("Preencha a senha");
       return;
     }
     login(userEmail, userPassword);
@@ -39,12 +40,15 @@ export default function index() {
     );
     if (newUser) {
       setUser(newUser);
+      Toast.success("Login realizado com sucesso");
       router.replace({ pathname: "/(tabs)/homeScreen" });
     } else {
+      Toast.error("Usuário não encontrado");
       console.log("Usuario não encontrado");
       console.log({ allUser });
     }
   }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
