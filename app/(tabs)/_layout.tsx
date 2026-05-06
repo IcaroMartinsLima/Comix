@@ -1,10 +1,23 @@
 import Feather from "@expo/vector-icons/Feather";
-import { Tabs, useRouter } from "expo-router";
-import { StyleSheet, View } from "react-native";
+import { Tabs } from "expo-router";
+import { useEffect } from "react";
+import { BackHandler, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
-  const router = useRouter();
+  useEffect(() => {
+    const onBackPress = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const subscription = BackHandler.addEventListener(
+      "hardwareBackPress",
+      onBackPress,
+    );
+
+    return () => subscription.remove();
+  }, []);
 
   const insets = useSafeAreaInsets();
   return (

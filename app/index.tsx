@@ -17,7 +17,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 
 export default function index() {
-  const { setUser, allUser, addUser } = useUserStore();
+  const { user, setUser, allUser, addUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const validUserInput = useCallback(() => {
@@ -39,7 +39,7 @@ export default function index() {
     );
     if (newUser) {
       setUser(newUser);
-      router.replace("/(tabs)/homeScreen");
+      router.replace({ pathname: "/(tabs)/homeScreen" });
     } else {
       console.log("Usuario não encontrado");
       console.log({ allUser });

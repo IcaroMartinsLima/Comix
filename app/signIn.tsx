@@ -17,7 +17,7 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 
 export default function signIn() {
-  const { allUser, addUser } = useUserStore();
+  const { allUser, addUser, setUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userName, setUserName] = useState("");
@@ -48,15 +48,19 @@ export default function signIn() {
     if (emailExist) {
       console.log("Email já cadastrado");
     } else {
-      addUser({
+      const newUser = {
         email: userEmail.toLowerCase().trim(),
         password: userPassword.trim(),
         username: userName.trim(),
         id: uuidv4(),
-      });
-      router.replace("..");
+      };
+
+      addUser(newUser);
+      setUser(newUser);
+      router.replace({ pathname: "/(tabs)/homeScreen" });
     }
   }
+
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}

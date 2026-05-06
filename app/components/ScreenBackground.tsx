@@ -31,7 +31,6 @@ export default function ScreenBackground({
           },
         ]}
       >
-        {" "}
         {useBackAction && (
           <TouchableOpacity style={styles.touch} onPress={() => router.back()}>
             <Feather name="arrow-left" size={24} color={Colors.white} />{" "}
@@ -44,8 +43,9 @@ export default function ScreenBackground({
         style={[
           styles.content,
           {
-            paddingTop: headerHeight - 50,
+            paddingTop: headerHeight - 80,
             paddingBottom: insets.bottom,
+            paddingHorizontal: 16,
           },
         ]}
       >
