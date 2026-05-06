@@ -1,3 +1,4 @@
+import { Colors } from "@/constants/colors";
 import Feather from "@expo/vector-icons/Feather";
 import { Tabs } from "expo-router";
 import { useEffect } from "react";
@@ -29,6 +30,7 @@ export default function TabLayout() {
           tabBarStyle: {
             height: 70,
           },
+          tabBarActiveTintColor: Colors.secondary
         }}
       >
         <Tabs.Screen

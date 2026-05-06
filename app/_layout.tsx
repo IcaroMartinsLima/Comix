@@ -11,22 +11,22 @@ import { openDatabaseSync } from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import "react-native-gesture-handler";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-get-random-values";
 import "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import ToastManager from "toastify-react-native";
 
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+  export const unstable_settings = {
+    anchor: "(tabs)",
+  };
 
-const expoDb = openDatabaseSync("db.db");
-export const db = drizzle(expoDb);
+  const expoDb = openDatabaseSync("db.db");
+  export const db = drizzle(expoDb);
 
-export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const insets = useSafeAreaInsets();
+  export default function RootLayout() {
+    const colorScheme = useColorScheme();
   const user = useUserStore((state) => state.user);
   const [hasHydrated, setHasHydrated] = useState(
     useUserStore.persist.hasHydrated(),
@@ -46,44 +46,39 @@ export default function RootLayout() {
 
   if (!hasHydrated) {
     return (
-      <GestureHandlerRootView
-        style={{
-          flex: 1,
-          paddingTop: insets.top,
-          paddingBottom: insets.bottom,
-        }}
-      >
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <ActivityIndicator size="large" />
-        </View>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <SafeAreaProvider>
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <ActivityIndicator size="large" />
+          </View>
+        </SafeAreaProvider>
       </GestureHandlerRootView>
     );
   }
 
   return (
-    <GestureHandlerRootView
-      style={{ flex: 1, paddingTop: insets.top, paddingBottom: insets.bottom }}
-    >
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {user ? (
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          ) : (
-            <>
-              <Stack.Screen name="index" options={{ headerShown: false }} />
-              <Stack.Screen name="signIn" options={{ headerShown: false }} />
-            </>
-          )}
-        </Stack>
-        <StatusBar style="auto" />
-        <ToastManager />
-      </ThemeProvider>
-    </GestureHandlerRootView>
-  );
-}
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <SafeAreaProvider>
+        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+          <Stack
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {user ? (
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            ) : (
+              <>
+                <Stack.Screen name="index" options={{ headerShown: false }} />
+                <Stack.Screen name="signIn" options={{ headerShown: false }} />
+              </>
+            )}
+          </Stack>
+          <StatusBar style="auto" />
+          <ToastManager />
+        </ThemeProvider>
+      </SafeAreaProvider>
+    </GestureHandlerRootView>)
+  }
