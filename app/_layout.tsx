@@ -1,24 +1,28 @@
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useUserStore } from "@/stores/userStore";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
+import { drizzle } from "drizzle-orm/expo-sqlite";
 import { Stack } from "expo-router";
+import { openDatabaseSync } from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-get-random-values";
 import "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import ToastManager from "toastify-react-native";
 
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useUserStore } from "@/stores/userStore";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 export const unstable_settings = {
   anchor: "(tabs)",
 };
+
+const expoDb = openDatabaseSync("db.db");
+export const db = drizzle(expoDb);
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
