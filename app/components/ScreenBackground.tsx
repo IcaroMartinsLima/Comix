@@ -24,7 +24,10 @@ export default function ScreenBackground({
   const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: bodyColor }]} contentContainerStyle={{paddingBottom: insets.bottom }}>
+    <ScrollView
+      style={[styles.container, { backgroundColor: bodyColor }]}
+      contentContainerStyle={{ paddingBottom: insets.bottom }}
+    >
       <View
         style={[
           styles.header,
