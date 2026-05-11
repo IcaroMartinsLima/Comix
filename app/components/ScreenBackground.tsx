@@ -3,6 +3,7 @@ import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
 import React, { ReactNode } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type MuiltColorBackgroundProps = {
@@ -10,6 +11,7 @@ type MuiltColorBackgroundProps = {
   headerColor?: string;
   headerHeight?: number;
   useBackAction?: boolean;
+  bodyColor?: string;
 };
 
 export default function ScreenBackground({
@@ -17,11 +19,12 @@ export default function ScreenBackground({
   headerColor = "#16a34a",
   headerHeight = 150,
   useBackAction = false,
+  bodyColor = Colors.white,
 }: MuiltColorBackgroundProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={[styles.container, { backgroundColor: bodyColor }]} contentContainerStyle={{paddingBottom: insets.bottom }}>
       <View
         style={[
           styles.header,
@@ -32,8 +35,11 @@ export default function ScreenBackground({
         ]}
       >
         {useBackAction && (
-          <TouchableOpacity style={styles.touch} onPress={() => router.back()}>
-            <Feather name="arrow-left" size={24} color={Colors.white} />{" "}
+          <TouchableOpacity
+            style={[styles.touch, { paddingVertical: insets.top }]}
+            onPress={() => router.back()}
+          >
+            <Feather name="arrow-left" size={24} color={Colors.white} />
             <Text style={styles.text}>Voltar</Text>
           </TouchableOpacity>
         )}
@@ -43,7 +49,7 @@ export default function ScreenBackground({
         style={[
           styles.content,
           {
-            paddingTop: headerHeight - headerHeight * 0.6,
+            paddingTop: headerHeight - headerHeight * 0.5,
             paddingBottom: 12,
             paddingHorizontal: 16,
           },
@@ -51,7 +57,7 @@ export default function ScreenBackground({
       >
         {children}
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
   touch: {
     flexDirection: "row",
     gap: 8,
-    padding: 16,
+    paddingHorizontal: 16,
     alignItems: "center",
   },
   content: {

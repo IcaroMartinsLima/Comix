@@ -22,7 +22,7 @@ export default function TabLayout() {
 
   const insets = useSafeAreaInsets();
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, paddingBottom: insets.bottom }}>
       <Tabs
         initialRouteName="homeScreen"
         screenOptions={{
@@ -30,7 +30,7 @@ export default function TabLayout() {
           tabBarStyle: {
             height: 70,
           },
-          tabBarActiveTintColor: Colors.secondary
+          tabBarActiveTintColor: Colors.secondary,
         }}
       >
         <Tabs.Screen

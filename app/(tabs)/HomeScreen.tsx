@@ -1,6 +1,7 @@
 import { Colors } from "@/constants/colors";
 import { useUserStore } from "@/stores/userStore";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import ScreenBackground from "../components/ScreenBackground";
 
@@ -29,18 +30,19 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <View style={styles.card}> 
+      <View style={styles.card}>
         <View style={styles.cardHeader}>
           <Text style={styles.cardText}>Total de Vendas</Text>
         </View>
-        <Text style={styles.moneyText}>
-          R$ 0,00
-        </Text>
+        <Text style={styles.moneyText}>R$ 0,00</Text>
         <Text style={styles.cardText}>0 vendas registradas</Text>
       </View>
 
-      <TouchableOpacity style={styles.button}>
-        <Text style={{fontSize: 18, color: Colors.white}}>+</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => router.push("/create")}
+      >
+        <Text style={{ fontSize: 18, color: Colors.white }}>+</Text>
       </TouchableOpacity>
     </ScreenBackground>
   );
@@ -80,21 +82,21 @@ const styles = StyleSheet.create({
     width: "100%",
     padding: 8,
     borderRadius: 8,
-    gap: 18
+    gap: 18,
   },
   cardHeader: {
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   cardText: {
     color: Colors.mediumGray,
     fontWeight: "400",
-    fontSize: 14
+    fontSize: 14,
   },
   moneyText: {
     color: Colors.secondary,
     fontWeight: "700",
-    fontSize: 30
+    fontSize: 30,
   },
   button: {
     width: "100%",
@@ -102,6 +104,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.secondary,
     padding: 8,
     borderRadius: 8,
-    marginTop: "auto"
-  }
+    marginTop: "auto",
+  },
 });

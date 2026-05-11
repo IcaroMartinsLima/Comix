@@ -18,15 +18,15 @@ import "react-native-reanimated";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import ToastManager from "toastify-react-native";
 
-  export const unstable_settings = {
-    anchor: "(tabs)",
-  };
+export const unstable_settings = {
+  anchor: "(tabs)",
+};
 
-  const expoDb = openDatabaseSync("db.db");
-  export const db = drizzle(expoDb);
+const expoDb = openDatabaseSync("db.db");
+export const db = drizzle(expoDb);
 
-  export default function RootLayout() {
-    const colorScheme = useColorScheme();
+export default function RootLayout() {
+  const colorScheme = useColorScheme();
   const user = useUserStore((state) => state.user);
   const [hasHydrated, setHasHydrated] = useState(
     useUserStore.persist.hasHydrated(),
@@ -61,7 +61,9 @@ import ToastManager from "toastify-react-native";
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+        <ThemeProvider
+          value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+        >
           <Stack
             screenOptions={{
               headerShown: false,
@@ -80,5 +82,6 @@ import ToastManager from "toastify-react-native";
           <ToastManager />
         </ThemeProvider>
       </SafeAreaProvider>
-    </GestureHandlerRootView>)
-  }
+    </GestureHandlerRootView>
+  );
+}
