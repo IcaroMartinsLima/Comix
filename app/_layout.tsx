@@ -1,3 +1,4 @@
+import migrations from "@/drizzle/migrations";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useUserStore } from "@/stores/userStore";
 import {
@@ -6,6 +7,7 @@ import {
   ThemeProvider,
 } from "@react-navigation/native";
 import { drizzle } from "drizzle-orm/expo-sqlite";
+import { useMigrations } from "drizzle-orm/expo-sqlite/migrator";
 import { Stack } from "expo-router";
 import { openDatabaseSync } from "expo-sqlite";
 import { StatusBar } from "expo-status-bar";
@@ -31,6 +33,7 @@ export default function RootLayout() {
   const [hasHydrated, setHasHydrated] = useState(
     useUserStore.persist.hasHydrated(),
   );
+  const { success, error } = useMigrations(db, migrations);
 
   useEffect(() => {
     if (hasHydrated) {
@@ -44,6 +47,9 @@ export default function RootLayout() {
     return unsubscribe;
   }, [hasHydrated]);
 
+  
+  if (error) return;
+  if (!success) return;
   if (!hasHydrated) {
     return (
       <GestureHandlerRootView style={{ flex: 1 }}>
