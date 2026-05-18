@@ -47,7 +47,6 @@ export default function RootLayout() {
     return unsubscribe;
   }, [hasHydrated]);
 
-  
   if (error) return;
   if (!success) return;
   if (!hasHydrated) {

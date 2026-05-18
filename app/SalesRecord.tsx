@@ -21,22 +21,21 @@ import ScreenBackground from "./components/ScreenBackground";
 type SalesRecordProps = {};
 
 export default function SalesRecord({}: SalesRecordProps) {
-  const {user} = useUserStore()
-  const { name, value,id } = useLocalSearchParams<{
+  const { user } = useUserStore();
+  const { name, value, id } = useLocalSearchParams<{
     name: string;
     value: string;
     id: string;
   }>();
   const numberValue = Number(value);
-  const [quantity, setQuantity] = useState(1) 
+  const [quantity, setQuantity] = useState(1);
   const [cpf, setCpf] = useState("");
-  const [showPayScreen, setShowPayScreen] = useState(false)
+  const [showPayScreen, setShowPayScreen] = useState(false);
 
   function onPress() {
-    if(isValidCPF(cpf)) 
-      setShowPayScreen(true)
+    if (isValidCPF(cpf)) setShowPayScreen(true);
     else {
-      Toast.error("CPF ínvalido")
+      Toast.error("CPF ínvalido");
     }
   }
 
@@ -45,11 +44,16 @@ export default function SalesRecord({}: SalesRecordProps) {
       amount: quantity,
       customerCpf: cpf,
       productId: Number(id),
-      sellerId:  user?.id ?? "",
-    }).then(() => {
-      Toast.success("Pagamento valido!")
-      router.navigate("/(tabs)/homeScreen")
-    }).catch((error) => {console.log({error});Toast.error("Erro ao confirmar o pagamento")})
+      sellerId: user?.id ?? "",
+    })
+      .then(() => {
+        Toast.success("Pagamento valido!");
+        router.navigate("/(tabs)/homeScreen");
+      })
+      .catch((error) => {
+        console.log({ error });
+        Toast.error("Erro ao confirmar o pagamento");
+      });
   }
 
   return (
@@ -73,71 +77,90 @@ export default function SalesRecord({}: SalesRecordProps) {
         <View style={{ flexDirection: "column" }}>
           <Text>Produto Selecionado</Text>
           <Text>{name}</Text>
-          <Text style={[styles.moneyText, {fontSize: 12}]}>{formatMoney(numberValue)} /un.</Text>
+          <Text style={[styles.moneyText, { fontSize: 12 }]}>
+            {formatMoney(numberValue)} /un.
+          </Text>
         </View>
 
-        <Text style={[styles.moneyText, {fontSize: 12}]}>{formatMoney(numberValue * quantity)}</Text>
+        <Text style={[styles.moneyText, { fontSize: 12 }]}>
+          {formatMoney(numberValue * quantity)}
+        </Text>
       </View>
-  { showPayScreen? <View style={[styles.card, { flexDirection: "column" }]}>
-
+      {showPayScreen ? (
+        <View style={[styles.card, { flexDirection: "column" }]}>
           <MaterialCommunityIcons name="qrcode" size={80} color="black" />
           <Text style={styles.qrCodeText}>QR Code de Pagamento</Text>
-          <Text style={styles.qrCodeSubTile}>Escaneie o código abaixo para realizar o pagamento</Text>
-          <Text style={styles.moneyText}>{formatMoney(numberValue * quantity)}</Text>
-          <QRCode size={160} value="https://youtu.be/dQw4w9WgXcQ?si=AXIC1IbmEjNXedwQ"></QRCode>
-          
-          <Button color={Colors.secondary} title="Confirmar pagamento" onPress={confirmPay}></Button>
+          <Text style={styles.qrCodeSubTile}>
+            Escaneie o código abaixo para realizar o pagamento
+          </Text>
+          <Text style={styles.moneyText}>
+            {formatMoney(numberValue * quantity)}
+          </Text>
+          <QRCode
+            size={160}
+            value="https://youtu.be/dQw4w9WgXcQ?si=AXIC1IbmEjNXedwQ"
+          ></QRCode>
 
-
-        </View>  : (
-    <View style={[styles.card, { flexDirection: "column" }]}>
-        <View style={{ gap: 8, flexDirection: "row", width: "100%" }}>
-          <Feather name="shopping-bag" size={18} color={Colors.secondary} />
-          <Text>Quantidade</Text>
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            width: "100%",
-          }}
-        >
-          <TouchableOpacity
-          disabled={quantity === 1}
-          onPress={() => setQuantity((state) => state - 1)}
-            style={[styles.touchStyle, { backgroundColor: Colors.gray }]}
-          >
-            <Feather name="minus" size={18} color="black" />
-          </TouchableOpacity>
-          <Text style={styles.number}>{quantity}</Text>
-          <TouchableOpacity
-          onPress={() => setQuantity((state) => state + 1)}
-            style={[styles.touchStyle, { backgroundColor: Colors.secondary }]}
-          >
-            <Feather name="plus" size={18} color={Colors.white} />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.row}>
-          <MaterialCommunityIcons
-            name="account"
-            size={20}
+          <Button
             color={Colors.secondary}
-          />
-          <Text>CPF do Cliente</Text>
+            title="Confirmar pagamento"
+            onPress={confirmPay}
+          ></Button>
         </View>
+      ) : (
+        <View style={[styles.card, { flexDirection: "column" }]}>
+          <View style={{ gap: 8, flexDirection: "row", width: "100%" }}>
+            <Feather name="shopping-bag" size={18} color={Colors.secondary} />
+            <Text>Quantidade</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              width: "100%",
+            }}
+          >
+            <TouchableOpacity
+              disabled={quantity === 1}
+              onPress={() => setQuantity((state) => state - 1)}
+              style={[styles.touchStyle, { backgroundColor: Colors.gray }]}
+            >
+              <Feather name="minus" size={18} color="black" />
+            </TouchableOpacity>
+            <Text style={styles.number}>{quantity}</Text>
+            <TouchableOpacity
+              onPress={() => setQuantity((state) => state + 1)}
+              style={[styles.touchStyle, { backgroundColor: Colors.secondary }]}
+            >
+              <Feather name="plus" size={18} color={Colors.white} />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.row}>
+            <MaterialCommunityIcons
+              name="account"
+              size={20}
+              color={Colors.secondary}
+            />
+            <Text>CPF do Cliente</Text>
+          </View>
 
-        <TextInput
-          style={styles.input}
-          textContentType="name"
-          value={cpf}
-          onChangeText={setCpf}
-          placeholder="000.000.000-00"
-        />
-        <View style={{width: "auto"}}>
-        <Button color={Colors.secondary} title="Gerar pagamento" onPress={onPress}></Button>
+          <TextInput
+            style={styles.input}
+            textContentType="name"
+            value={cpf}
+            onChangeText={setCpf}
+            placeholder="000.000.000-00"
+          />
+          <View style={{ width: "auto" }}>
+            <Button
+              color={Colors.secondary}
+              title="Gerar pagamento"
+              onPress={onPress}
+            ></Button>
+          </View>
         </View>
-      </View>)}
-      <ToastManager/>
+      )}
+      <ToastManager />
     </ScreenBackground>
   );
 }
@@ -185,7 +208,6 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     fontSize: 18,
     color: Colors.secondary,
-  
   },
   input: {
     backgroundColor: Colors.lightGray,
@@ -201,11 +223,11 @@ const styles = StyleSheet.create({
   },
   qrCodeText: {
     fontWeight: "700",
-    fontSize: 18
+    fontSize: 18,
   },
   qrCodeSubTile: {
     fontWeight: "400",
     fontSize: 12,
-    color: Colors.darkGray
-  }
+    color: Colors.darkGray,
+  },
 });
