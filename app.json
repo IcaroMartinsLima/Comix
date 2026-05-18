@@ -4,7 +4,7 @@
     "slug": "Comix",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/adaptative_icon.png",
     "scheme": "comix",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -14,7 +14,11 @@
     "android": {
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.anonymous.Comix"
+      "package": "com.anonymous.Comix",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/adaptative_icon.png",
+        "backgroundColor": "#000000"
+      }
     },
     "web": {
       "output": "static",
