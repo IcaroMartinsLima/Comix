@@ -42,9 +42,6 @@ export default function HomeScreen() {
         </View>
         <View style={styles.iconRow}>
           <TouchableOpacity style={styles.iconBox}>
-            <MaterialCommunityIcons name="account" size={16} color="white" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.iconBox}>
             <MaterialCommunityIcons
               name="exit-to-app"
               size={16}

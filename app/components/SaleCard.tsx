@@ -3,13 +3,14 @@ import { products } from "@/constants/saleProducts";
 import { Sale } from "@/db/schema";
 import { formatCpf, formatMoney } from "@/utils/productUtils";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 type SaleCardProps = {
   sale: Sale;
+  style?: StyleProp<ViewStyle>
 };
 
-export default function SaleCard({ sale }: SaleCardProps) {
+export default function SaleCard({ sale,style }: SaleCardProps) {
   const saleProduct = products.find((value) => value.id === sale.productId);
   if (!saleProduct) return null;
 
@@ -22,7 +23,7 @@ export default function SaleCard({ sale }: SaleCardProps) {
     : "";
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <View style={styles.row}>
         <Text style={styles.productName}>{saleProduct.name}</Text>
         <Text style={styles.value}>{formattedValue}</Text>

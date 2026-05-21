@@ -3,7 +3,6 @@ import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
 import React, { ReactNode } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type MuiltColorBackgroundProps = {
@@ -24,9 +23,8 @@ export default function ScreenBackground({
   const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView
+    <View
       style={[styles.container, { backgroundColor: bodyColor }]}
-      contentContainerStyle={{ paddingBottom: insets.bottom }}
     >
       <View
         style={[
@@ -60,7 +58,7 @@ export default function ScreenBackground({
       >
         {children}
       </View>
-    </ScrollView>
+    </View>
   );
 }
 

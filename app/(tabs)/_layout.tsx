@@ -37,6 +37,7 @@ export default function TabLayout() {
           name="history"
           options={{
             title: "Histórico",
+            tabBarActiveTintColor: Colors.infoDark, 
             tabBarIcon: ({ color, size }) => (
               <Feather name="clock" size={size} color={color} />
             ),
