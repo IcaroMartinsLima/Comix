@@ -16,8 +16,7 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.anonymous.Comix",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptative_icon.png",
-        "backgroundColor": "#000000"
+        "foregroundImage": "./assets/images/adaptative_icon.png"
       }
     },
     "web": {

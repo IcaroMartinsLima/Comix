@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   headerSubTitle: {
-    fontWeight: 700,
+    fontWeight: 400,
     fontSize: 16,
     color: Colors.white,
   },

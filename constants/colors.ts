@@ -27,5 +27,6 @@ export const Colors = {
 
   info: "#2F80ED",
   infoLight: "#56CCF2",
+  infoWhiteWish: "#E5F0FE",
   infoDark: "#1C5DB6",
 };
