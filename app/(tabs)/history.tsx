@@ -64,7 +64,7 @@ export default function History() {
         <Text style={styles.headerTitle}>Histórico de Vendas</Text>
         <Text style={styles.headerSubTitle}>Todas as vendas registradas</Text>
       </View>
-r
+
       <View style={styles.searchBox}>
         <Ionicons
           name="search-outline"
