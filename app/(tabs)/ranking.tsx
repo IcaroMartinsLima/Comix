@@ -55,10 +55,7 @@ export default function Ranking() {
   }, [allSales, allUser]);
 
   return (
-    <ScreenBackground
-      headerColor={Colors.dark}
-      bodyColor={Colors.lightGray}
-    >
+    <ScreenBackground headerColor={Colors.dark} bodyColor={Colors.lightGray}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Ranking de Vendedores</Text>
         <Text style={styles.headerSubTitle}>

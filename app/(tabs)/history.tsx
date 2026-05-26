@@ -5,13 +5,7 @@ import { useUserStore } from "@/stores/userStore";
 import { getTotalMoneyFromSales } from "@/utils/productUtils";
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useMemo, useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from "react-native";
+import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import SaleCard from "../components/SaleCard";
 import ScreenBackground from "../components/ScreenBackground";
 
@@ -40,12 +34,9 @@ export default function History() {
     const q = search.trim().toLowerCase();
     if (!q) return userSales;
     return userSales.filter((sale) => {
-      const productId   = String(sale.productId);
+      const productId = String(sale.productId);
       const customerCpf = sale.customerCpf.toLowerCase();
-      return (
-        productId.includes(q) ||
-        customerCpf.includes(q)
-      );
+      return productId.includes(q) || customerCpf.includes(q);
     });
   }, [userSales, search]);
 
@@ -99,11 +90,15 @@ export default function History() {
         </View>
       </View>
 
-    <ScrollView style={styles.scrollStyle} contentContainerStyle={{gap: 8}}>
-          {filteredSales.slice(-8).map((sale) => (
-                <SaleCard sale={sale} key={sale.id} style={{marginVertical: 0, marginHorizontal: 0}} />
-              ))}
-   </ScrollView>
+      <ScrollView style={styles.scrollStyle} contentContainerStyle={{ gap: 8 }}>
+        {filteredSales.slice(-8).map((sale) => (
+          <SaleCard
+            sale={sale}
+            key={sale.id}
+            style={{ marginVertical: 0, marginHorizontal: 0 }}
+          />
+        ))}
+      </ScrollView>
     </ScreenBackground>
   );
 }

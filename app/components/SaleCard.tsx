@@ -6,10 +6,10 @@ import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 type SaleCardProps = {
   sale: Sale;
-  style?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>;
 };
 
-export default function SaleCard({ sale,style }: SaleCardProps) {
+export default function SaleCard({ sale, style }: SaleCardProps) {
   const saleProduct = products.find((value) => value.id === sale.productId);
   if (!saleProduct) return null;
 

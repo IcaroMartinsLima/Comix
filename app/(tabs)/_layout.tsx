@@ -37,7 +37,7 @@ export default function TabLayout() {
           name="history"
           options={{
             title: "Histórico",
-            tabBarActiveTintColor: Colors.infoDark, 
+            tabBarActiveTintColor: Colors.infoDark,
             tabBarIcon: ({ color, size }) => (
               <Feather name="clock" size={size} color={color} />
             ),
@@ -58,7 +58,7 @@ export default function TabLayout() {
           name="ranking"
           options={{
             title: "Ranking",
-            tabBarActiveTintColor: Colors.dark, 
+            tabBarActiveTintColor: Colors.dark,
             tabBarIcon: ({ color, size }) => (
               <Feather name="award" size={size} color={color} />
             ),

@@ -23,9 +23,7 @@ export default function ScreenBackground({
   const insets = useSafeAreaInsets();
 
   return (
-    <View
-      style={[styles.container, { backgroundColor: bodyColor }]}
-    >
+    <View style={[styles.container, { backgroundColor: bodyColor }]}>
       <View
         style={[
           styles.header,
