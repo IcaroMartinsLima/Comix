@@ -44,8 +44,6 @@ export default function index() {
       router.replace({ pathname: "/(tabs)/homeScreen" });
     } else {
       Toast.error("Usuário não encontrado");
-      console.log("Usuario não encontrado");
-      console.log({ allUser });
     }
   }
 
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     padding: 12,
-    borderRadius: "50%",
+    borderRadius: 999,
     backgroundColor: Colors.white,
     elevation: 3,
   },

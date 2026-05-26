@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   },
   icon: {
     padding: 12,
-    borderRadius: "50%",
+    borderRadius: 999,
     backgroundColor: Colors.white,
     elevation: 3,
   },

@@ -14,7 +14,6 @@ type UserStore = {
   setUser: (user: UserType | null) => void;
   allUser: UserType[];
   addUser: (user: UserType) => void;
-  removeUser: (user: UserType) => void;
 };
 
 export const useUserStore = create<UserStore>()(
@@ -29,11 +28,6 @@ export const useUserStore = create<UserStore>()(
       addUser: (user) =>
         set((state) => ({
           allUser: [...state.allUser, user],
-        })),
-
-      removeUser: (user) =>
-        set((state) => ({
-          allUser: state.allUser.filter((value) => value.email !== user.email),
         })),
     }),
     {

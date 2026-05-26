@@ -2,7 +2,7 @@ import { Colors } from "@/constants/colors";
 import Feather from "@expo/vector-icons/Feather";
 import { Tabs } from "expo-router";
 import { useEffect } from "react";
-import { BackHandler, StyleSheet, View } from "react-native";
+import { BackHandler, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
@@ -58,6 +58,7 @@ export default function TabLayout() {
           name="ranking"
           options={{
             title: "Ranking",
+            tabBarActiveTintColor: Colors.dark, 
             tabBarIcon: ({ color, size }) => (
               <Feather name="award" size={size} color={color} />
             ),
@@ -67,20 +68,3 @@ export default function TabLayout() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  fabContainer: {
-    position: "absolute",
-    bottom: 35,
-    alignSelf: "center",
-  },
-  fab: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "green",
-    justifyContent: "center",
-    alignItems: "center",
-    elevation: 5,
-  },
-});

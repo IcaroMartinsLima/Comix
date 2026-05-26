@@ -2,7 +2,6 @@ import { Colors } from "@/constants/colors";
 import { products } from "@/constants/saleProducts";
 import { Sale } from "@/db/schema";
 import { formatCpf, formatMoney } from "@/utils/productUtils";
-import React from "react";
 import { StyleProp, StyleSheet, Text, View, ViewStyle } from "react-native";
 
 type SaleCardProps = {

@@ -11,7 +11,7 @@ import SaleCard from "../components/SaleCard";
 import ScreenBackground from "../components/ScreenBackground";
 
 export default function HomeScreen() {
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const [userSaler, setUserSales] = useState<Sale[]>([]);
   const totalSales = useMemo(
     () => getTotalMoneyFromSales(userSaler),
@@ -41,7 +41,13 @@ export default function HomeScreen() {
           <Text style={styles.headerTitle}>Olá, {user?.username}</Text>
         </View>
         <View style={styles.iconRow}>
-          <TouchableOpacity style={styles.iconBox}>
+          <TouchableOpacity
+            style={styles.iconBox}
+            onPress={() => {
+              setUser(null);
+              router.replace("/");
+            }}
+          >
             <MaterialCommunityIcons
               name="exit-to-app"
               size={16}

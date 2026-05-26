@@ -5,7 +5,7 @@ import { formatMoney, isValidCPF } from "@/utils/productUtils";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router, useLocalSearchParams } from "expo-router";
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Button,
   StyleSheet,
@@ -15,12 +15,10 @@ import {
   View,
 } from "react-native";
 import QRCode from "react-native-qrcode-svg";
-import ToastManager, { Toast } from "toastify-react-native";
+import { Toast } from "toastify-react-native";
 import ScreenBackground from "./components/ScreenBackground";
 
-type SalesRecordProps = {};
-
-export default function SalesRecord({}: SalesRecordProps) {
+export default function SalesRecord() {
   const { user } = useUserStore();
   const { name, value, id } = useLocalSearchParams<{
     name: string;
@@ -50,8 +48,7 @@ export default function SalesRecord({}: SalesRecordProps) {
         Toast.success("Pagamento valido!");
         router.navigate("/(tabs)/homeScreen");
       })
-      .catch((error) => {
-        console.log({ error });
+      .catch(() => {
         Toast.error("Erro ao confirmar o pagamento");
       });
   }
@@ -66,7 +63,7 @@ export default function SalesRecord({}: SalesRecordProps) {
             backgroundColor: Colors.lightGreen,
             aspectRatio: 1,
             padding: 8,
-            borderRadius: "50%",
+            borderRadius: 999,
             width: 35,
             alignItems: "center",
             justifyContent: "center",
@@ -160,7 +157,6 @@ export default function SalesRecord({}: SalesRecordProps) {
           </View>
         </View>
       )}
-      <ToastManager />
     </ScreenBackground>
   );
 }
