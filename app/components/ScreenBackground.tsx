@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/colors";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import Feather from "@expo/vector-icons/Feather";
 import { router } from "expo-router";
 import React, { ReactNode } from "react";
@@ -15,20 +16,24 @@ type MuiltColorBackgroundProps = {
 
 export default function ScreenBackground({
   children,
-  headerColor = "#16a34a",
+  headerColor,
   headerHeight = 150,
   useBackAction = false,
-  bodyColor = Colors.white,
+  bodyColor,
 }: MuiltColorBackgroundProps) {
   const insets = useSafeAreaInsets();
+  const theme = useThemeColors();
+
+  const resolvedHeaderColor = headerColor ?? theme.medium;
+  const resolvedBodyColor = bodyColor ?? theme.white;
 
   return (
-    <View style={[styles.container, { backgroundColor: bodyColor }]}>
+    <View style={[styles.container, { backgroundColor: resolvedBodyColor }]}>
       <View
         style={[
           styles.header,
           {
-            backgroundColor: headerColor,
+            backgroundColor: resolvedHeaderColor,
             height: headerHeight + insets.top,
           },
         ]}

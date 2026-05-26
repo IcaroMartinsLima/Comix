@@ -1,4 +1,32 @@
-export const Colors = {
+export type AppThemeColors = {
+  primary: string;
+  secondary: string;
+  medium: string;
+  darkGreen: string;
+  lightGreen: string;
+  dark: string;
+  white: string;
+  lightGray: string;
+  gray: string;
+  mediumGray: string;
+  darkGray: string;
+  black: string;
+  success: string;
+  successLight: string;
+  successDark: string;
+  error: string;
+  errorLight: string;
+  errorDark: string;
+  warning: string;
+  warningLight: string;
+  warningDark: string;
+  info: string;
+  infoLight: string;
+  infoWhiteWish: string;
+  infoDark: string;
+};
+
+export const LightColors: AppThemeColors = {
   primary: "#04D939",
   secondary: "#03A63C",
   medium: "#027333",
@@ -30,3 +58,38 @@ export const Colors = {
   infoWhiteWish: "#E5F0FE",
   infoDark: "#1C5DB6",
 };
+
+export const DarkColors: AppThemeColors = {
+  primary: "#04D939",
+  secondary: "#03A63C",
+  medium: "#027333",
+  darkGreen: "#025939",
+  lightGreen: "#1B4D2E",
+  dark: "#0A1628",
+  white: "#1E1E1E",
+
+  lightGray: "#2C2C2C",
+  gray: "#3A3A3A",
+  mediumGray: "#9E9E9E",
+  darkGray: "#BDBDBD",
+  black: "#F5F5F5",
+
+  success: "#27AE60",
+  successLight: "#1B4332",
+  successDark: "#6FCF97",
+
+  error: "#EB5757",
+  errorLight: "#3D1A1A",
+  errorDark: "#F29999",
+
+  warning: "#F2C94C",
+  warningLight: "#3D3518",
+  warningDark: "#F7DC6F",
+
+  info: "#2F80ED",
+  infoLight: "#1A2D4A",
+  infoWhiteWish: "#1A2D4A",
+  infoDark: "#56CCF2",
+};
+
+export const Colors = LightColors;

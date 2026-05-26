@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/colors";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { getAllSales } from "@/db/sales";
 import { Sale } from "@/db/schema";
 import { useUserStore } from "@/stores/userStore";
@@ -15,8 +16,108 @@ type SellerRanking = {
 };
 
 export default function Ranking() {
+  const theme = useThemeColors();
   const { allUser } = useUserStore();
   const [allSales, setAllSales] = useState<Sale[]>([]);
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        header: {
+          width: "100%",
+          marginBottom: 12,
+        },
+        headerTitle: {
+          fontWeight: "700",
+          fontSize: 20,
+          color: Colors.white,
+        },
+        headerSubTitle: {
+          fontWeight: "400",
+          fontSize: 14,
+          color: Colors.white,
+          marginTop: 2,
+        },
+        scrollStyle: {
+          width: "100%",
+        },
+        listContent: {
+          paddingBottom: 24,
+          gap: 8,
+        },
+        card: {
+          backgroundColor: theme.white,
+          borderRadius: 10,
+          padding: 14,
+          elevation: 2,
+          shadowColor: "#000",
+          shadowOpacity: 0.06,
+          shadowRadius: 4,
+          shadowOffset: { width: 0, height: 2 },
+        },
+        positionRow: {
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 12,
+        },
+        positionBadge: {
+          width: 36,
+          height: 36,
+          borderRadius: 18,
+          backgroundColor: theme.lightGray,
+          justifyContent: "center",
+          alignItems: "center",
+        },
+        goldBadge: {
+          backgroundColor: "#FFF3CD",
+        },
+        silverBadge: {
+          backgroundColor: "#E8E8E8",
+        },
+        bronzeBadge: {
+          backgroundColor: "#FFE0CC",
+        },
+        positionText: {
+          fontWeight: "700",
+          fontSize: 14,
+          color: theme.darkGray,
+        },
+        goldText: {
+          color: "#B8860B",
+        },
+        silverText: {
+          color: "#717171",
+        },
+        bronzeText: {
+          color: "#8B4513",
+        },
+        sellerInfo: {
+          flex: 1,
+        },
+        sellerName: {
+          fontWeight: "600",
+          fontSize: 16,
+          color: theme.black,
+        },
+        saleCount: {
+          fontSize: 12,
+          color: theme.mediumGray,
+          marginTop: 2,
+        },
+        moneyText: {
+          fontWeight: "700",
+          fontSize: 16,
+          color: theme.secondary,
+        },
+        emptyText: {
+          textAlign: "center",
+          color: theme.mediumGray,
+          marginTop: 40,
+          fontSize: 14,
+        },
+      }),
+    [theme],
+  );
 
   async function fetchSales() {
     const sales = await getAllSales();
@@ -55,7 +156,7 @@ export default function Ranking() {
   }, [allSales, allUser]);
 
   return (
-    <ScreenBackground headerColor={Colors.dark} bodyColor={Colors.lightGray}>
+    <ScreenBackground headerColor={theme.dark} bodyColor={theme.lightGray}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Ranking de Vendedores</Text>
         <Text style={styles.headerSubTitle}>
@@ -98,7 +199,8 @@ export default function Ranking() {
                 <View style={styles.sellerInfo}>
                   <Text style={styles.sellerName}>{seller.sellerName}</Text>
                   <Text style={styles.saleCount}>
-                    {seller.saleCount} venda{seller.saleCount !== 1 ? "s" : ""}
+                    {seller.saleCount} venda
+                    {seller.saleCount !== 1 ? "s" : ""}
                   </Text>
                 </View>
                 <Text style={styles.moneyText}>
@@ -112,98 +214,3 @@ export default function Ranking() {
     </ScreenBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    width: "100%",
-    marginBottom: 12,
-  },
-  headerTitle: {
-    fontWeight: "700",
-    fontSize: 20,
-    color: Colors.white,
-  },
-  headerSubTitle: {
-    fontWeight: "400",
-    fontSize: 14,
-    color: Colors.white,
-    marginTop: 2,
-  },
-  scrollStyle: {
-    width: "100%",
-  },
-  listContent: {
-    paddingBottom: 24,
-    gap: 8,
-  },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    padding: 14,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  positionRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
-  positionBadge: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: Colors.lightGray,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  goldBadge: {
-    backgroundColor: "#FFF3CD",
-  },
-  silverBadge: {
-    backgroundColor: "#E8E8E8",
-  },
-  bronzeBadge: {
-    backgroundColor: "#FFE0CC",
-  },
-  positionText: {
-    fontWeight: "700",
-    fontSize: 14,
-    color: Colors.darkGray,
-  },
-  goldText: {
-    color: "#B8860B",
-  },
-  silverText: {
-    color: "#717171",
-  },
-  bronzeText: {
-    color: "#8B4513",
-  },
-  sellerInfo: {
-    flex: 1,
-  },
-  sellerName: {
-    fontWeight: "600",
-    fontSize: 16,
-    color: Colors.black,
-  },
-  saleCount: {
-    fontSize: 12,
-    color: Colors.mediumGray,
-    marginTop: 2,
-  },
-  moneyText: {
-    fontWeight: "700",
-    fontSize: 16,
-    color: Colors.secondary,
-  },
-  emptyText: {
-    textAlign: "center",
-    color: Colors.mediumGray,
-    marginTop: 40,
-    fontSize: 14,
-  },
-});

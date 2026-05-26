@@ -1,4 +1,5 @@
 import { Colors } from "@/constants/colors";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { getSalesBySeller } from "@/db/sales";
 import { Sale } from "@/db/schema";
 import { useUserStore } from "@/stores/userStore";
@@ -10,9 +11,102 @@ import SaleCard from "../components/SaleCard";
 import ScreenBackground from "../components/ScreenBackground";
 
 export default function History() {
+  const theme = useThemeColors();
   const { user } = useUserStore();
   const [userSales, setUserSales] = useState<Sale[]>([]);
   const [search, setSearch] = useState("");
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        header: {
+          width: "100%",
+          marginBottom: 12,
+        },
+        scrollStyle: {
+          width: "100%",
+          height: "100%",
+        },
+        headerTitle: {
+          fontWeight: "700",
+          fontSize: 20,
+          color: Colors.white,
+        },
+        headerSubTitle: {
+          fontWeight: "400",
+          fontSize: 14,
+          color: Colors.white,
+          marginTop: 2,
+        },
+        searchBox: {
+          flexDirection: "row",
+          alignItems: "center",
+          backgroundColor: theme.white,
+          borderRadius: 10,
+          paddingHorizontal: 12,
+          paddingVertical: 8,
+          width: "100%",
+          marginBottom: 12,
+          elevation: 2,
+          shadowColor: "#000",
+          shadowOpacity: 0.06,
+          shadowRadius: 4,
+          shadowOffset: { width: 0, height: 2 },
+        },
+        searchIcon: {
+          marginRight: 8,
+        },
+        searchInput: {
+          flex: 1,
+          fontSize: 14,
+          color: theme.black,
+        },
+        metricsRow: {
+          flexDirection: "row",
+          gap: 10,
+          width: "100%",
+          marginBottom: 12,
+        },
+        metricCard: {
+          flex: 1,
+          backgroundColor: theme.white,
+          borderRadius: 10,
+          padding: 14,
+          elevation: 2,
+          shadowColor: "#000",
+          shadowOpacity: 0.06,
+          shadowRadius: 4,
+          shadowOffset: { width: 0, height: 2 },
+        },
+        metricLabel: {
+          fontSize: 13,
+          color: theme.mediumGray,
+          fontWeight: "400",
+          marginBottom: 6,
+        },
+        metricValueBlue: {
+          fontSize: 26,
+          fontWeight: "700",
+          color: theme.infoDark,
+        },
+        metricValueGreen: {
+          fontSize: 20,
+          fontWeight: "700",
+          color: theme.secondary,
+        },
+        listContent: {
+          paddingBottom: 24,
+          gap: 0,
+        },
+        emptyText: {
+          textAlign: "center",
+          color: theme.mediumGray,
+          marginTop: 40,
+          fontSize: 14,
+        },
+      }),
+    [theme],
+  );
 
   async function getSales() {
     if (user) {
@@ -48,8 +142,8 @@ export default function History() {
 
   return (
     <ScreenBackground
-      headerColor={Colors.infoDark}
-      bodyColor={Colors.infoWhiteWish}
+      headerColor={theme.infoDark}
+      bodyColor={theme.infoWhiteWish}
     >
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Histórico de Vendas</Text>
@@ -60,13 +154,13 @@ export default function History() {
         <Ionicons
           name="search-outline"
           size={18}
-          color={Colors.mediumGray}
+          color={theme.mediumGray}
           style={styles.searchIcon}
         />
         <TextInput
           style={styles.searchInput}
           placeholder="Buscar por produto ou CPF do cliente..."
-          placeholderTextColor={Colors.mediumGray}
+          placeholderTextColor={theme.mediumGray}
           value={search}
           onChangeText={setSearch}
           returnKeyType="search"
@@ -102,94 +196,3 @@ export default function History() {
     </ScreenBackground>
   );
 }
-
-const styles = StyleSheet.create({
-  header: {
-    width: "100%",
-    marginBottom: 12,
-  },
-  scrollStyle: {
-    width: "100%",
-    height: "100%",
-  },
-  headerTitle: {
-    fontWeight: "700",
-    fontSize: 20,
-    color: Colors.white,
-  },
-  headerSubTitle: {
-    fontWeight: "400",
-    fontSize: 14,
-    color: Colors.white,
-    marginTop: 2,
-  },
-
-  searchBox: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    width: "100%",
-    marginBottom: 12,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  searchIcon: {
-    marginRight: 8,
-  },
-  searchInput: {
-    flex: 1,
-    fontSize: 14,
-    color: Colors.black ?? "#111",
-  },
-
-  metricsRow: {
-    flexDirection: "row",
-    gap: 10,
-    width: "100%",
-    marginBottom: 12,
-  },
-  metricCard: {
-    flex: 1,
-    backgroundColor: Colors.white,
-    borderRadius: 10,
-    padding: 14,
-    elevation: 2,
-    shadowColor: "#000",
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    shadowOffset: { width: 0, height: 2 },
-  },
-  metricLabel: {
-    fontSize: 13,
-    color: Colors.mediumGray,
-    fontWeight: "400",
-    marginBottom: 6,
-  },
-  metricValueBlue: {
-    fontSize: 26,
-    fontWeight: "700",
-    color: Colors.infoDark ?? Colors.primary,
-  },
-  metricValueGreen: {
-    fontSize: 20,
-    fontWeight: "700",
-    color: Colors.secondary,
-  },
-
-  listContent: {
-    paddingBottom: 24,
-    gap: 0,
-  },
-  emptyText: {
-    textAlign: "center",
-    color: Colors.mediumGray,
-    marginTop: 40,
-    fontSize: 14,
-  },
-});

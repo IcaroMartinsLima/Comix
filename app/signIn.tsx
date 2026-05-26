@@ -1,9 +1,10 @@
 import { Colors } from "@/constants/colors";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import { useUserStore } from "@/stores/userStore";
 import Feather from "@expo/vector-icons/Feather";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import { router } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Toast } from "toastify-react-native";
 import { v4 as uuidv4 } from "uuid";
 
@@ -19,10 +20,63 @@ import {
 import { TextInput } from "react-native-gesture-handler";
 
 export default function signIn() {
+  const theme = useThemeColors();
   const { allUser, addUser, setUser } = useUserStore();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const [userName, setUserName] = useState("");
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: theme.secondary,
+          gap: 6,
+        },
+        title: {
+          fontWeight: "700",
+          fontSize: 24,
+          color: Colors.white,
+        },
+        subTitle: {
+          fontWeight: "400",
+          fontSize: 12,
+          color: Colors.white,
+        },
+        row: {
+          flexDirection: "row",
+          gap: 8,
+        },
+        icon: {
+          padding: 12,
+          borderRadius: 999,
+          backgroundColor: Colors.white,
+          elevation: 3,
+        },
+        card: {
+          backgroundColor: theme.white,
+          borderRadius: 8,
+          padding: 12,
+          elevation: 3,
+          width: "80%",
+          gap: 8,
+        },
+        input: {
+          backgroundColor: theme.lightGray,
+          borderRadius: 4,
+          paddingVertical: 2,
+          paddingHorizontal: 4,
+        },
+        label: {
+          color: theme.black,
+        },
+      }),
+    [theme],
+  );
+
   const validUserInput = useCallback(() => {
     const isValidEmail = (email: string) => {
       return /\S+@\S+\.\S+/.test(email);
@@ -41,6 +95,7 @@ export default function signIn() {
     }
     createAcount(userName, userEmail, userPassword);
   }, [userName, userEmail, userPassword]);
+
   function createAcount(
     userName: string,
     userEmail: string,
@@ -71,7 +126,7 @@ export default function signIn() {
     >
       <View style={styles.container}>
         <View style={styles.icon}>
-          <Feather name="shopping-bag" size={32} color={Colors.secondary} />
+          <Feather name="shopping-bag" size={32} color={theme.secondary} />
         </View>
         <Text style={styles.title}>Portal de vendas</Text>
         <Text style={styles.subTitle}>Crie sua conta</Text>
@@ -81,9 +136,9 @@ export default function signIn() {
             <MaterialCommunityIcons
               name="account"
               size={20}
-              color={Colors.secondary}
+              color={theme.secondary}
             />
-            <Text>Nome</Text>
+            <Text style={styles.label}>Nome</Text>
           </View>
 
           <TextInput
@@ -96,9 +151,9 @@ export default function signIn() {
             <MaterialCommunityIcons
               name="email"
               size={20}
-              color={Colors.secondary}
+              color={theme.secondary}
             />
-            <Text>E-mail</Text>
+            <Text style={styles.label}>E-mail</Text>
           </View>
 
           <TextInput
@@ -113,9 +168,9 @@ export default function signIn() {
             <MaterialCommunityIcons
               name="lock"
               size={20}
-              color={Colors.secondary}
+              color={theme.secondary}
             />
-            <Text>Senha</Text>
+            <Text style={styles.label}>Senha</Text>
           </View>
           <TextInput
             style={styles.input}
@@ -127,58 +182,14 @@ export default function signIn() {
           />
           <Button
             title="Cadastrar"
-            color={Colors.secondary}
+            color={theme.secondary}
             onPress={validUserInput}
-          ></Button>
+          />
           <TouchableOpacity onPress={() => router.back()}>
-            <Text>Já tem conta? Faça login</Text>
+            <Text style={styles.label}>Já tem conta? Faça login</Text>
           </TouchableOpacity>
         </View>
       </View>
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: Colors.secondary,
-    gap: 6,
-  },
-  title: {
-    fontWeight: "700",
-    fontSize: 24,
-    color: Colors.white,
-  },
-  subTitle: {
-    fontWeight: "400",
-    fontSize: 12,
-    color: Colors.white,
-  },
-  row: {
-    flexDirection: "row",
-    gap: 8,
-  },
-  icon: {
-    padding: 12,
-    borderRadius: 999,
-    backgroundColor: Colors.white,
-    elevation: 3,
-  },
-  card: {
-    backgroundColor: Colors.white,
-    borderRadius: 8,
-    padding: 12,
-    elevation: 3,
-    width: "80%",
-    gap: 8,
-  },
-  input: {
-    backgroundColor: Colors.lightGray,
-    borderRadius: 4,
-    paddingVertical: 2,
-    paddingHorizontal: 4,
-  },
-});

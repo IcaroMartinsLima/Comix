@@ -1,11 +1,26 @@
-import { Colors } from "@/constants/colors";
+import { useThemeColors } from "@/hooks/useThemeColors";
 import Feather from "@expo/vector-icons/Feather";
 import { Tabs } from "expo-router";
-import { useEffect } from "react";
-import { BackHandler, View } from "react-native";
+import { useEffect, useMemo } from "react";
+import { BackHandler, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TabLayout() {
+  const theme = useThemeColors();
+  const insets = useSafeAreaInsets();
+
+  const styles = useMemo(
+    () =>
+      StyleSheet.create({
+        container: {
+          flex: 1,
+          paddingBottom: insets.bottom,
+          backgroundColor: theme.white,
+        },
+      }),
+    [theme, insets.bottom],
+  );
+
   useEffect(() => {
     const onBackPress = () => {
       BackHandler.exitApp();
@@ -20,9 +35,8 @@ export default function TabLayout() {
     return () => subscription.remove();
   }, []);
 
-  const insets = useSafeAreaInsets();
   return (
-    <View style={{ flex: 1, paddingBottom: insets.bottom }}>
+    <View style={styles.container}>
       <Tabs
         initialRouteName="homeScreen"
         screenOptions={{
@@ -30,14 +44,14 @@ export default function TabLayout() {
           tabBarStyle: {
             height: 70,
           },
-          tabBarActiveTintColor: Colors.secondary,
+          tabBarActiveTintColor: theme.secondary,
         }}
       >
         <Tabs.Screen
           name="history"
           options={{
             title: "Histórico",
-            tabBarActiveTintColor: Colors.infoDark,
+            tabBarActiveTintColor: theme.infoDark,
             tabBarIcon: ({ color, size }) => (
               <Feather name="clock" size={size} color={color} />
             ),
@@ -58,7 +72,7 @@ export default function TabLayout() {
           name="ranking"
           options={{
             title: "Ranking",
-            tabBarActiveTintColor: Colors.dark,
+            tabBarActiveTintColor: theme.black,
             tabBarIcon: ({ color, size }) => (
               <Feather name="award" size={size} color={color} />
             ),
